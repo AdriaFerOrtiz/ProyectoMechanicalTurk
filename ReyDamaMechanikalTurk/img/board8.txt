@@ -1,0 +1,8 @@
+. . P R r p . .
+. . P N n p . .
+. . P B b p . .
+. . P K k p . .
+. . P Q q p . .
+. . P B b p . .
+. . P N n p . .
+. . P R r p . .
