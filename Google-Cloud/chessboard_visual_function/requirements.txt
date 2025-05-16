@@ -1,0 +1,6 @@
+functions-framework
+flask
+tensorflow
+opencv-python-headless
+numpy
+matplotlib

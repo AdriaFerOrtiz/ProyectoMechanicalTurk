@@ -1,0 +1,11 @@
+# Procesamiento de imágenes
+opencv-python-headless==4.7.0.72
+numpy==1.24.3
+matplotlib==3.7.1
+
+# Machine Learning
+tensorflow==2.12.0
+scikit-learn==1.2.2
+
+# Google Cloud (solo si accedes a datos en Cloud Storage)
+google-cloud-storage==2.9.0

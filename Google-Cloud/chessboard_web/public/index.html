@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tablero de Ajedrez Inteligente</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>ReyDamaMechanicalTurk</h1>
+  
+  <div id="controles">
+    <label class="input-label">
+      <input type="file" id="input-imagen" accept="image/*">
+      <span>Seleccionar imagen del tablero</span>
+    </label>
+    <button id="btn-subir">Procesar Imagen</button>
+    <button id="btn-reiniciar" type="button">Reiniciar Tablero</button>
+  </div>
+  <div id="mensajes"></div>
+  <div id="chessboard"></div>
+  <div id="camara-container">
+  <video id="video-camara" autoplay playsinline></video>
+  <button id="btn-grabar">Iniciar grabación</button>
+  <img id="foto-capturada" alt="Última foto capturada" style="width:100%;margin-top:10px;border-radius:8px;box-shadow:0 0 8px #ccc;">
+</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
