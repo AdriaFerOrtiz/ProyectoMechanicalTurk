@@ -1,5 +1,6 @@
 from game_state import GameState
 from collections import deque
+from motor_control import ejecutar_movimiento_completo
 
 '''
 Central Module: clase que controla el estado de la partida y se comunica con el resto de módulos.
@@ -109,6 +110,7 @@ class CentralModule:
                 self.game_state.update_board(destino_temporal, bloqueador)
 
                 camino.pop()
+                camino.insert(0, bloqueador)
                 if camino_principal:
                     candidatos_validos.append({
                         "bloqueador": bloqueador,
@@ -125,22 +127,20 @@ class CentralModule:
         mejor = min(candidatos_validos, key=lambda x: x["num_movimientos_temporales"])
 
         return {
-            "temporal": {
-                "desde": mejor["bloqueador"],
-                "camino": mejor["camino_temporal"]
-            },
+            "temporal": mejor["camino_temporal"],
             "principal": mejor["camino_principal"]
         }
     
 if __name__ == "__main__":
     modulo = CentralModule()
-    origen = (5, 7)     # Posición de la torre
-    destino = (2, 4)    # Queremos llegar a mover el caballo en esa fila
+    origen = (5, 6)     # Posición de la torre
+    destino = (5, 4)    # Queremos llegar a mover el caballo en esa fila
 
     camino = modulo.encontrar_camino_simple(origen, destino)
     if camino:
         print("Camino encontrado:", camino)
         modulo.game_state.update_board(origen, destino)
+        ejecutar_movimiento_completo(camino)
     else:
         resultado = modulo.mover_temporalmente_y_continuar(origen, destino)
 
@@ -150,5 +150,6 @@ if __name__ == "__main__":
             print("2. Ejecutar movimiento principal:", resultado["principal"])
             print("3. Volver a dejar la pieza en su lugar.")
             modulo.game_state.update_board(origen, destino)
+            ejecutar_movimiento_completo(resultado["principal"], resultado["temporal"])
         else:
             print("No se pudo resolver la obstrucción.")
