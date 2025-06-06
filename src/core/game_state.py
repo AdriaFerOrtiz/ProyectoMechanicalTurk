@@ -45,10 +45,9 @@ class GameState:
     Aplica un movimiento a la matriz tablero
     - move: movimiento en noomenclatura uci (ej. "e2e4")
     '''
-    def update_board(self, move):
-        from_pos, to_pos = move[:2], move[2:]
-        x1, y1 = self.chess_to_coords(from_pos)
-        x2, y2 = self.chess_to_coords(to_pos)
+    def update_board(self, origen, destino):
+        x1, y1 = origen
+        x2, y2 = destino
 
         self.board[y2][x2] = self.board[y1][x1]
         self.board[y1][x1] = ' '
@@ -58,6 +57,16 @@ class GameState:
     - pos: posición en nomenclatura de ajedrez
     - return: booleano que es true si la posición está vacía y false en caso contrario
     '''
-    def is_empty(self, pos):
-        x, y = self.chess_to_coords(pos)
+    def is_empty(self, x, y):
         return self.board[y][x] == ' '
+    
+    # Verifica si una coordenada es válida
+    def coordenada_valida(self, x, y):
+        return 0 <= x < 8 and 0 <= y < 8
+    
+    # Devuelve los vecinos (arriba, abajo, izq, der)
+    def vecinos(self, x, y):
+        for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)]:
+            nx, ny = x + dx, y + dy
+            if self.coordenada_valida(nx, ny):
+                yield nx, ny
