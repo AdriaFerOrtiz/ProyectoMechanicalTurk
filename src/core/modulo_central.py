@@ -1,6 +1,5 @@
 from game_state import GameState
-import time
-import requests
+from collections import deque
 
 '''
 Central Module: clase que controla el estado de la partida y se comunica con el resto de módulos.
@@ -16,106 +15,140 @@ class CentralModule:
     '''
     def __init__(self):
         self.game_state = GameState()
-        self.ia_endpoint = "https://tu-api-ia.com/move"
-        #self.vision_module = VisionModule()
-        #self.movement_module = MovementModule()
 
-    '''
-    Calcula rutas en L (horizontal → vertical o viceversa) que pueda realizar el robot para mover una pieza
-    - form_pos: posición inicial de la pieza
-    - to_pos: posición final de la pieza
-    - return: lista con los caminos en L disponibles
-    '''
-    def calculate_orthogonal_path(self, from_pos, to_pos):
-        from_x, from_y = self.game_state.chess_to_coords(from_pos)
-        to_x, to_y = self.game_state.chess_to_coords(to_pos)
-        
-        # Opción 1: Horizontal → Vertical
-        path1 = []
-        step_x = 1 if to_x > from_x else -1
-        if from_x != to_x:
-            for x in range(from_x, to_x + step_x, step_x):
-                path1.append((x, from_y))
-        step_y = 1 if to_y > from_y else -1
-        if from_y != to_y:
-            for y in range(from_y, to_y + step_y, step_y):
-                path1.append((to_x, y))
-        
-        # Opción 2: Vertical → Horizontal
-        path2 = []
-        if from_y != to_y:
-            for y in range(from_y, to_y + step_y, step_y):
-                path2.append((from_x, y))
-        if from_x != to_x:
-            for x in range(from_x, to_x + step_x, step_x):
-                path2.append((x, to_y))
-        
-        return [path1, path2]
+    # BFS para encontrar un camino libre de obstáculos (solo en casillas vacías)
+    def encontrar_camino_simple(self, origen, destino):
+        visitado = set()
+        cola = deque()
+        cola.append((origen, []))
 
-    '''
-    Busca una ruta para realizar el movimiento de la pieza que no tenga obstaculos
-    - form_pos: posición inicial de la pieza
-    - to_pos: posición final de la pieza
-    - return: primer camino encontrado sin obstaculos
-    '''
-    def find_valid_path(self, from_pos, to_pos):
-        possible_paths = self.calculate_orthogonal_path(from_pos, to_pos)
-        for path in possible_paths:
-            if all(self.game_state.is_empty(self.game_state.coord_to_chess(x, y)) for (x, y) in path[1:]):
-                return path
-        return None
+        while cola:
+            (x, y), camino = cola.popleft()
+            if (x, y) == destino:
+                return camino + [(x, y)]
 
-    '''
-    Realiza un movimiento de la partida, gestionando el tablero virtual y movimiento del robot
-    - move: movimiento en noomenclatura uci (ej. "e2e4")
-    '''
-    def execute_robot_move(self, move):
-        from_pos, to_pos = move[:2], move[2:]
-        path = self.find_valid_path(from_pos, to_pos)
+            if (x, y) in visitado:
+                continue
+            visitado.add((x, y))
 
-        if path is None:
-            blocking_piece_pos = self.find_blocking_piece(from_pos, to_pos)
-            safe_pos = self.find_empty_position_nearby(blocking_piece_pos)
-            self.game_state.update_board(f"{blocking_piece_pos}{safe_pos}")
-            self.movement_module.move_piece(f"{blocking_piece_pos}{safe_pos}")
-            time.sleep(1)
-            path = self.find_valid_path(from_pos, to_pos)
-            self.game_state.update_board(f"{safe_pos}{blocking_piece_pos}")
-            self.movement_module.move_piece(f"{safe_pos}{blocking_piece_pos}")
+            for nx, ny in self.game_state.vecinos(x, y):
+                if self.game_state.is_empty(nx, ny) or (nx, ny) == destino:
+                    cola.append(((nx, ny), camino + [(x, y)]))
 
-        for i in range(len(path) - 1):
-            step_move = f"{self.game_state.coord_to_chess(*path[i])}{self.game_state.coord_to_chess(*path[i+1])}"
-            self.movement_module.move_piece(step_move)
-        self.game_state.update_board(move)
+        return None  # No se encontró camino
+    
+    def detectar_bloqueadores(self, origen, destino):
+        """Detecta qué piezas bloquean el camino directo entre origen y destino"""
+        visitado = set()
+        cola = deque()
+        cola.append((origen, []))
 
-    '''
-    Encuentra la pieza que bloquea el camino
-    - form_pos: posición inicial de la pieza
-    - to_pos: posición final de la pieza
-    - return: devuelve la posición de la pieza que obstaculiza el camino
-    '''
-    def find_blocking_piece(self, from_pos, to_pos):
-        paths = self.calculate_orthogonal_path(from_pos, to_pos)
-        for path in paths:
-            for (x, y) in path[1:]:
-                if not self.game_state.is_empty(self.game_state.coord_to_chess(x, y)):
-                    return self.game_state.coord_to_chess(x, y)
+        bloqueadores = set()
 
-    '''
-    Busca una casilla vacía en las casillas adyacentes
-    - pos: posición en nomencaltura de ajedrez (ej. e4)
-    - return: cooredenadas de la casilla vacía
-    '''
-    def find_empty_position_nearby(self, pos):
-        x, y = self.game_state.chess_to_coords(pos)
-        for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
-            new_x, new_y = x + dx, y + dy
-            if 0 <= new_x < 8 and 0 <= new_y < 8 and self.game_state.is_empty(self.game_state.coord_to_chess(new_x, new_y)):
-                return self.game_state.coord_to_chess(new_x, new_y)
-        raise Exception("No hay casillas vacías cerca")
+        while cola:
+            (x, y), camino = cola.popleft()
+            if (x, y) == destino:
+                return list(bloqueadores)
 
-    def request_ai_move(self):
-        """Solicita un movimiento a la IA."""
-        fen = self._board_to_fen()  # Implementa esta función
-        response = requests.post(self.ia_endpoint, json={"fen": fen})
-        return response.json()["move"]
+            if (x, y) in visitado:
+                continue
+            visitado.add((x, y))
+
+            for nx, ny in self.game_state.vecinos(x, y):
+                if not self.game_state.is_empty(nx, ny) and (nx, ny) != destino:
+                    bloqueadores.add((nx, ny))
+                elif self.game_state.is_empty(nx, ny) or (nx, ny) == destino:
+                    cola.append(((nx, ny), camino + [(x, y)]))
+
+        return list(bloqueadores)
+
+    def buscar_casilla_temporal(self, bloqueador, max_depth=2):
+        """Busca casillas vacías accesibles desde la posición del bloqueador en 1 o 2 movimientos"""
+        visitado = set()
+        cola = deque()
+        cola.append((bloqueador, []))
+        resultados = []
+
+        while cola:
+            (x, y), camino = cola.popleft()
+            if len(camino) > max_depth:
+                continue
+            if (x, y) != bloqueador and self.game_state.is_empty(x, y):
+                resultados.append((camino + [(x, y)]))
+
+            for nx, ny in self.game_state.vecinos(x, y):
+                if (nx, ny) not in visitado and self.game_state.is_empty(nx, ny):
+                    visitado.add((nx, ny))
+                    cola.append(((nx, ny), camino + [(nx, ny)]))
+        return resultados
+
+    
+    def mover_temporalmente_y_continuar(self, origen, destino):
+        bloqueadores = self.detectar_bloqueadores(origen, destino)
+
+        if not bloqueadores:
+            print("No hay bloqueadores directos.")
+            return None
+
+        candidatos_validos = []
+
+        for bloqueador in bloqueadores:
+            caminos_temporales = self.buscar_casilla_temporal(bloqueador, max_depth=2)
+
+            for camino in caminos_temporales:
+                if not camino:
+                    continue
+
+                destino_temporal = camino[-1]
+                self.game_state.update_board(bloqueador, destino_temporal)
+
+                # Reintentamos encontrar el camino original ahora sin el bloqueador
+                camino_principal = self.encontrar_camino_simple(origen, destino)
+
+                # Revertimos
+                self.game_state.update_board(destino_temporal, bloqueador)
+
+                camino.pop()
+                if camino_principal:
+                    candidatos_validos.append({
+                        "bloqueador": bloqueador,
+                        "camino_temporal": camino,
+                        "camino_principal": camino_principal,
+                        "num_movimientos_temporales": len(camino),
+                    })
+
+        if not candidatos_validos:
+            print("Ningún bloqueador pudo despejar el camino.")
+            return None
+
+        # Elegimos el que despeja el camino con menos movimientos temporales
+        mejor = min(candidatos_validos, key=lambda x: x["num_movimientos_temporales"])
+
+        return {
+            "temporal": {
+                "desde": mejor["bloqueador"],
+                "camino": mejor["camino_temporal"]
+            },
+            "principal": mejor["camino_principal"]
+        }
+    
+if __name__ == "__main__":
+    modulo = CentralModule()
+    origen = (5, 7)     # Posición de la torre
+    destino = (2, 4)    # Queremos llegar a mover el caballo en esa fila
+
+    camino = modulo.encontrar_camino_simple(origen, destino)
+    if camino:
+        print("Camino encontrado:", camino)
+        modulo.game_state.update_board(origen, destino)
+    else:
+        resultado = modulo.mover_temporalmente_y_continuar(origen, destino)
+
+        if resultado:
+            print("Instrucciones:")
+            print("1. Mover bloqueador temporal:", resultado["temporal"])
+            print("2. Ejecutar movimiento principal:", resultado["principal"])
+            print("3. Volver a dejar la pieza en su lugar.")
+            modulo.game_state.update_board(origen, destino)
+        else:
+            print("No se pudo resolver la obstrucción.")
