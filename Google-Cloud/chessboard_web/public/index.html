@@ -3,28 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tablero de Ajedrez Inteligente</title>
+  <title>Rey Y Dama - Mechanical Turk</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>ReyDamaMechanicalTurk</h1>
-  
-  <div id="controles">
+  <!-- Banner -->
+  <header id="banner">
+    <h1>Rey y Dama - Mechanical Turk</h1>
+  </header>
+
+  <!-- Controles generales -->
+  <section id="controles-superiores">
     <label class="input-label">
       <input type="file" id="input-imagen" accept="image/*">
       <span>Seleccionar imagen del tablero</span>
     </label>
     <button id="btn-subir">Procesar Imagen</button>
     <button id="btn-reiniciar" type="button">Reiniciar Tablero</button>
-  </div>
-  <div id="mensajes"></div>
-  <div id="chessboard"></div>
-  <div id="camara-container">
-  <video id="video-camara" autoplay playsinline></video>
-  <button id="btn-grabar">Iniciar grabación</button>
-  <img id="foto-capturada" alt="Última foto capturada" style="width:100%;margin-top:10px;border-radius:8px;box-shadow:0 0 8px #ccc;">
-</div>
+  </section>
 
+  <!-- Cuerpo principal -->
+  <div id="main-container">
+    <div id="izquierda">
+      <button id="btn-modo-juego" type="button">Modo: Jugador</button>
+
+      <div class="tablero-con-barra">
+        <div id="mejor-movimiento" class="info-movimiento" style="display:none">
+          <div id="barra-evaluacion-vertical-container">
+            <div id="barra-evaluacion-vertical">
+              <div id="barra-eval-blancas-vert"></div>
+              <div id="barra-eval-negras-vert"></div>
+            </div>
+            <span id="eval-numero-vert">0.00</span>
+          </div>
+          <div>
+            Mejor movimiento: <span id="movimiento-texto">--</span>
+          </div>
+        </div>
+        <div id="chessboard"></div>
+      </div>
+      <div id="mensajes"></div>
+    </div>
+
+    <div id="derecha">
+      <div id="camara-container">
+        <!-- Cámara como ya está -->
+        <video id="video-camara" autoplay playsinline width="320" height="240" style="border-radius:8px;"></video>
+        <canvas id="canvas-captura" width="320" height="240" style="display:none;"></canvas>
+        <img id="foto-capturada" alt="Última foto capturada" style="display:none;width:320px;margin-top:10px;border-radius:8px;box-shadow:0 0 8px #ccc;">
+        <div id="botones-camara">
+          <button id="btn-iniciar-camara" type="button">Iniciar cámara</button>
+          <button id="btn-capturar-foto" type="button" style="display:none;">Capturar foto</button>
+          <button id="btn-modo-grabar" type="button" style="display:none;">Modo grabar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carga y final de partida -->
+  <div id="overlay-carga" style="display:none;">
+    <div class="spinner"></div>
+    <p>Procesando...</p>
+  </div>
+
+  <div id="fin-partida" style="display:none;">
+    <div class="fin-mensaje">
+      <h2 id="fin-texto">¡Jaque Mate!</h2>
+      <button onclick="reiniciarPartidaDesdeFinal()">Reiniciar partida</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="chess.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
