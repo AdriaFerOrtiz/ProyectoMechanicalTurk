@@ -49,7 +49,7 @@ The following diagram illustrates the complete wiring of the robot's electronic 
 | **Relé 5 V 10 A**                                 | ![Relé 5V 10A](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Rele.jpg) | [Amazon](https://www.amazon.com/10A-Channel-Relay-Module-Arduino/dp/B07Z432CS3) |
 | **Webcam USB Genérica (720p/1080p)**             | ![Webcam Genérica](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/webcam.jpg) | [Amazon – Webcam USB 1080p con micrófono](https://www.amazon.com/-/es/Webcam-Computadora-Micrófono-Resolución-Streaming/dp/B08HRPDYTP) |
 | **ATX 500W Power Supply**                         | ![ATX PSU](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/PS.jpg) | [PCComponentes (similar)](https://www.pccomponentes.com/fuentes-de-alimentacion) |
-| **456 Point Breadboard**                          | ![Breadboard]([https://upload.wikimedia.org/wikipedia/commons/1/15/Breadboard-456.jpg](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/PB.jpg)) | [Amazon](https://www.amazon.com/EL-CP-003-Breadboard-Distribution-Solderless-Prototyping/dp/B01EV6LJ7G) |
+| **456 Point Breadboard**                          | ![ProtoBoard](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/PB.jpg) | [Amazon](https://www.amazon.com/EL-CP-003-Breadboard-Distribution-Solderless-Prototyping/dp/B01EV6LJ7G) |
 
 **Software**:  
 - **Google Cloud Vision** (Computer vision)  
