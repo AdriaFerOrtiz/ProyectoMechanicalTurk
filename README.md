@@ -47,9 +47,9 @@ The following diagram illustrates the complete wiring of the robot's electronic 
 | **Driver A4988**                                  | ![A4988](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Driver.jpg) | [Pololu](https://www.pololu.com/product/1182)                        |
 | **Electroimán 12 V / 100 N**                      | ![12V Electroimán](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Iman.jpg) | [TodoElectrónica](https://www.todoelectronica.com/modulo-rele-5vdc-de-1-canal-10a-para-arduino-p-110226.html?srsltid=AfmBOoo3lXE0UYiJQ3rck6Ui3YCa-USp1VEkin8u6RmBwkzYa254TDCxwr0)  |
 | **Relé 5 V 10 A**                                 | ![Relé 5V 10A](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Rele.jpg) | [Amazon](https://www.amazon.com/10A-Channel-Relay-Module-Arduino/dp/B07Z432CS3) |
-| **Cámara OV5647 1080p**                          | ![OV5647](https://cdn.sparkfun.com//assets/parts/1/0/0/5/0/13898-Pi-Camera-Module-V2.jpg) | [Bricogeek](https://tienda.bricogeek.com/accesorios-raspberry-pi/1472-camara-5mp-ov5647-1080p-para-raspberry-pi-zero.html) |
-| **ATX 500W Power Supply**                         | ![ATX PSU](https://upload.wikimedia.org/wikipedia/commons/9/9e/ATX_power_supply.jpg) | [PCComponentes (similar)](https://www.pccomponentes.com/fuentes-de-alimentacion) |
-| **456 Point Breadboard**                          | ![Breadboard](https://upload.wikimedia.org/wikipedia/commons/1/15/Breadboard-456.jpg) | [Amazon](https://www.amazon.com/EL-CP-003-Breadboard-Distribution-Solderless-Prototyping/dp/B01EV6LJ7G) |
+| **Webcam USB Genérica (720p/1080p)**             | ![Webcam Genérica](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/webcam.jpg) | [Amazon – Webcam USB 1080p con micrófono](https://www.amazon.com/-/es/Webcam-Computadora-Micrófono-Resolución-Streaming/dp/B08HRPDYTP) |
+| **ATX 500W Power Supply**                         | ![ATX PSU](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/PS.jpg) | [PCComponentes (similar)](https://www.pccomponentes.com/fuentes-de-alimentacion) |
+| **456 Point Breadboard**                          | ![Breadboard]([https://upload.wikimedia.org/wikipedia/commons/1/15/Breadboard-456.jpg](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/PB.jpg)) | [Amazon](https://www.amazon.com/EL-CP-003-Breadboard-Distribution-Solderless-Prototyping/dp/B01EV6LJ7G) |
 
 **Software**:  
 - **Google Cloud Vision** (Computer vision)  
