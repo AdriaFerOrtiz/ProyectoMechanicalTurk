@@ -77,6 +77,174 @@ The following diagram illustrates the complete wiring of the robot's electronic 
 
 ---
 
+# Chessboard and Piece Recognition Using Computer Vision
+
+## Authors
+Eduard José García Mendeleac, Adrià Fernández Ortiz, Luis Adrián Gómez Batista
+
+---
+
+## Abstract
+
+This project presents the development of a computer vision system capable of automatically reconstructing the state of a physical chessboard from a single top-down image. The system combines image processing techniques, convolutional neural networks (CNNs), and test-time data augmentation to detect the presence, color, and type of each piece across the 64 squares. A modular approach was chosen, with three specialized models improving the system's robustness and interpretability. Test-time augmentation (TTA) further boosts prediction reliability under adverse visual conditions. Experiments demonstrate high accuracy: over 99% in piece presence detection, over 98% in color classification, and nearly 90% in piece type identification. This work validates the viability of accurate real-world board reconstruction in uncontrolled environments and lays a foundation for robotics, education, and automated game analysis.
+
+---
+
+## Keywords
+
+Computer Vision · Chess Recognition · Deep Learning · CNN · Image Segmentation · Piece Classification · Test-Time Augmentation · Modular Architecture
+
+---
+
+## 1. Introduction
+
+This project is part of a broader initiative to build a fully autonomous chess-playing robot. Our contribution focuses on the vision system, which identifies the real-time state of a physical chessboard via an overhead camera.
+
+We employed image processing and deep learning techniques to detect the board, segment the squares, and classify pieces, converting the results into algebraic notation for robotic interpretation. The system is designed to be robust against lighting variations, board styles, and camera perspectives.
+
+---
+
+## 2. Related Work
+
+Prior research explored digitizing chessboards using computer vision. A project at the Universidad Politécnica de Madrid applied an Xception network with perspective transforms, achieving 98% accuracy in piece recognition. Stanford proposed combining shape descriptors with the Hough transform to recognize boards from angled views, achieving 70–100% accuracy depending on the viewpoint.
+
+Commercial apps like ChessEye and Chessify use CNNs on mobile devices to recognize physical or digital boards, integrating engines like Stockfish or Leela Chess Zero. These approaches demonstrate that vision-based systems are viable alternatives to sensor-based boards such as those from DGT or Novag.
+
+---
+
+## 3. System Overview
+
+The system is based on a CNN trained on a custom dataset of manually captured and labeled chessboard images.
+
+### Processing Pipeline:
+1. **Image Capture**
+2. **Board Detection and Square Segmentation**
+3. **Square-wise Filtering**
+4. **CNN-based Classification**
+5. **Translation to Algebraic Notation**
+
+The entire process runs in a cloud function that receives an image and returns an 8x8 matrix of recognized positions. The system’s accuracy has been validated per square and per piece type, confirming its feasibility for robotic integration.
+
+---
+
+## 4. Experiments and Results
+
+### 4.1 Initial Approach
+
+An overhead image was captured, converted to grayscale, and processed using the Canny edge detector to identify board lines. However, line intersections were inconsistent, leading to incorrect segmentation and failure to isolate all 64 squares. Issues included uneven lighting and imprecise line detection.
+
+### 4.2 Improved Board Segmentation
+
+We introduced green corner markers on the board to aid square segmentation. These markers enabled reliable detection of board corners, and the board was successfully divided into 64 square images.
+
+Data augmentation was applied to each square (rotations, contrast adjustment) to simulate various conditions. A single model was trained to classify the piece type in each square. However, due to dataset imbalance (many pawns and empty squares), early results were misleadingly high. Normalizing the dataset dropped accuracy to ~60%.
+
+Square segmentation still had occasional misalignments, which affected classification. These issues led to a refined, modular approach for the final system.
+
+---
+
+## 4.3 Final Version
+
+### 4.3.1 Concept
+
+A modular system was implemented with three independent models:
+- **Presence Model**: Detects if a piece exists in the square.
+- **Color Model**: Classifies the piece as white or black.
+- **Type Model**: Identifies the piece type (Pawn, Knight, Bishop, Rook, Queen, King).
+
+**Test-Time Augmentation (TTA)** is used to increase reliability: each square is augmented with rotations, flips, and filters, and the final prediction is averaged across all augmentations.
+
+### 4.3.2 Procedure
+
+**Board Segmentation**  
+The `crop_and_divide_board` function uses green markers to accurately crop the board into 64 squares. A margin parameter ensures square-centered cropping.
+
+**Test-Time Augmentation (TTA)**  
+Each square is augmented by:
+- Rotations (90°, 180°, 270°)
+- Flips (horizontal/vertical)
+- Filters (contrast, gradient, etc.)
+
+**Specialized Model Inference**  
+Each augmented square is processed through:
+- **Presence Model** (binary classification)
+- **Color Model** (binary classification: white or black)
+- **Type Model** (multi-class: P, N, B, R, Q, K)
+
+Predictions are averaged across augmentations. If the presence score > 0.5, a piece is assumed. Color and type are only predicted when a piece is present.
+
+**Integration of Results**  
+Three boards are created:
+- **Presence Board**: marks squares with X or .
+- **Color Board**: marks squares with B, N or .
+- **Piece Board**: marks squares with piece letters (e.g., 'p', 'K', or '.').
+
+---
+
+### 4.3.3 Quantitative Results
+
+**Presence Model**  
+- Accuracy: >99%
+- F1-Score: 0.994
+
+**Color Model**  
+- Accuracy: >98%
+- F1-Score: 0.987
+
+**Type Model**  
+- Accuracy: ~90%
+- Best results: Knights and Kings
+- Most confusion: Pawns vs Bishops
+
+| Class | Precision | Recall | F1-Score |
+|-------|-----------|--------|----------|
+| P     | 0.900     | 0.871  | 0.885    |
+| N     | 0.915     | 0.925  | 0.920    |
+| B     | 0.860     | 0.893  | 0.876    |
+| R     | 0.922     | 0.898  | 0.910    |
+| Q     | 0.916     | 0.888  | 0.902    |
+| K     | 0.897     | 0.926  | 0.911    |
+
+---
+
+### 4.3.4 Insights
+
+- **Robustness**: TTA improves prediction consistency under visual noise.
+- **Modularity**: Independent models enhance flexibility and debugging.
+- **Limitations**: System performance drops if the board is misaligned or highly unlit/unusual in style.
+
+---
+
+## 5. Conclusion
+
+We successfully developed a modular computer vision system capable of reconstructing a chessboard's state from a single image. The multi-stage design combined deep learning, data augmentation, and precise segmentation to achieve high accuracy even under uncontrolled conditions.
+
+### Key Contributions:
+- Modular pipeline: presence, color, and type models
+- Green-corner segmentation for accurate square cropping
+- TTA for improved reliability
+- Cloud deployment with real-time inference
+
+### Future Work:
+- Automatic board detection in cluttered scenes
+- Handling blurred pieces, reflections, and extreme lighting
+- Extension to video-based real-time chess tracking
+
+This project demonstrates the feasibility of high-fidelity chessboard state reconstruction and opens paths for future applications in robotics, game analysis, and education.
+
+---
+
+## References
+
+1. Fernández-Ropero, J.A., "Reconocimiento de piezas de ajedrez mediante visión por computador y deep learning," UPM, 2022. https://oa.upm.es/75174/1/TFG_RAFAEL_ALONSO_SIRERA.pdf  
+2. ChessEye, "Chess board recognition using AI," 2023. https://www.chesseye.com  
+3. Chessify, "Chess board scanner with Stockfish integration," 2023. https://www.chessify.me  
+4. DGT Projects, "Digital chess board with reed switches," 2021. https://www.dgtprojects.com  
+5. Novag, "NOVAG CETRINE electronic chess computer," 2020. https://www.novag.com  
+6. Stockfish, "Open-source chess engine," 2023. https://stockfishchess.org  
+
+---
+
 ## ✨ Amazing Contributions  
 - **Obstacle Avoidance**: The robot plans alternative paths if pieces block movement.  
 - **Low-Cost Precision**: Achieves sub-millimeter accuracy with budget stepper motors.  
