@@ -63,9 +63,9 @@ The following diagram illustrates the complete wiring of the robot's electronic 
 
 ---
 
-## 🖥️ Software Architecture  
+# 🖥️ Software Architecture  
 
-### ☁️ 1. Cloud Infrastructure (Google Cloud)
+## ☁️ 1. Cloud Infrastructure (Google Cloud)
 
 This project leverages **Google Cloud Platform (GCP)** to handle compute-intensive tasks such as board recognition and AI move generation. The cloud infrastructure is composed of two key services:
 
@@ -104,7 +104,7 @@ The web application acts as the **central control panel** for the system. It pro
 
 ---
 
-### 🤖 2. Local Robot Software
+## 🤖 2. Local Robot Software
 
 The robot’s local software is responsible for interpreting commands from the web interface and executing the necessary mechanical movements. It is modular and divided into several blocks, each with a specific role.
 
@@ -120,7 +120,7 @@ The robot’s local software is responsible for interpreting commands from the w
 
 #### 🔄 Local Software Diagram
 
-![Local Software Diagram](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img\local_software_scheme.png)
+![Local Software Diagram](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/local_software_scheme.png)
 
 #### 🛠️ Execution Flow Summary
 
@@ -138,21 +138,21 @@ The robot’s local software is responsible for interpreting commands from the w
 
 ---
 
-# Chessboard and Piece Recognition Using Computer Vision
+## 3. Chessboard and Piece Recognition Using Computer Vision
 
-## Abstract
+### Abstract
 
 This project presents the development of a computer vision system capable of automatically reconstructing the state of a physical chessboard from a single top-down image. The system combines image processing techniques, convolutional neural networks (CNNs), and test-time data augmentation to detect the presence, color, and type of each piece across the 64 squares. A modular approach was chosen, with three specialized models improving the system's robustness and interpretability. Test-time augmentation (TTA) further boosts prediction reliability under adverse visual conditions. Experiments demonstrate high accuracy: over 99% in piece presence detection, over 98% in color classification, and nearly 90% in piece type identification. This work validates the viability of accurate real-world board reconstruction in uncontrolled environments and lays a foundation for robotics, education, and automated game analysis.
 
 ---
 
-## Keywords
+### Keywords
 
 Computer Vision · Chess Recognition · Deep Learning · CNN · Image Segmentation · Piece Classification · Test-Time Augmentation · Modular Architecture
 
 ---
 
-## 1. Introduction
+### 1. Introduction
 
 This project is part of a broader initiative to build a fully autonomous chess-playing robot. Our contribution focuses on the vision system, which identifies the real-time state of a physical chessboard via an overhead camera.
 
@@ -160,7 +160,7 @@ We employed image processing and deep learning techniques to detect the board, s
 
 ---
 
-## 2. Related Work
+### 2. Related Work
 
 Prior research explored digitizing chessboards using computer vision. A project at the Universidad Politécnica de Madrid applied an Xception network with perspective transforms, achieving 98% accuracy in piece recognition. Stanford proposed combining shape descriptors with the Hough transform to recognize boards from angled views, achieving 70–100% accuracy depending on the viewpoint.
 
@@ -168,11 +168,11 @@ Commercial apps like ChessEye and Chessify use CNNs on mobile devices to recogni
 
 ---
 
-## 3. System Overview
+### 3. System Overview
 
 The system is based on a CNN trained on a custom dataset of manually captured and labeled chessboard images.
 
-### Processing Pipeline:
+#### Processing Pipeline:
 1. **Image Capture**
 2. **Board Detection and Square Segmentation**
 3. **Square-wise Filtering**
@@ -183,13 +183,13 @@ The entire process runs in a cloud function that receives an image and returns a
 
 ---
 
-## 4. Experiments and Results
+### 4. Experiments and Results
 
-### 4.1 Initial Approach
+#### 4.1 Initial Approach
 
 An overhead image was captured, converted to grayscale, and processed using the Canny edge detector to identify board lines. However, line intersections were inconsistent, leading to incorrect segmentation and failure to isolate all 64 squares. Issues included uneven lighting and imprecise line detection.
 
-### 4.2 Improved Board Segmentation
+#### 4.2 Improved Board Segmentation
 
 We introduced green corner markers on the board to aid square segmentation. These markers enabled reliable detection of board corners, and the board was successfully divided into 64 square images.
 
@@ -199,9 +199,9 @@ Square segmentation still had occasional misalignments, which affected classific
 
 ---
 
-## 4.3 Final Version
+### 4.3 Final Version
 
-### 4.3.1 Concept
+#### 4.3.1 Concept
 
 A modular system was implemented with three independent models:
 - **Presence Model**: Detects if a piece exists in the square.
@@ -210,7 +210,7 @@ A modular system was implemented with three independent models:
 
 **Test-Time Augmentation (TTA)** is used to increase reliability: each square is augmented with rotations, flips, and filters, and the final prediction is averaged across all augmentations.
 
-### 4.3.2 Procedure
+#### 4.3.2 Procedure
 
 **Board Segmentation**  
 The `crop_and_divide_board` function uses green markers to accurately crop the board into 64 squares. A margin parameter ensures square-centered cropping.
@@ -237,7 +237,7 @@ Three boards are created:
 
 ---
 
-### 4.3.3 Quantitative Results
+#### 4.3.3 Quantitative Results
 
 **Presence Model**  
 - Accuracy: >99%
@@ -263,7 +263,7 @@ Three boards are created:
 
 ---
 
-### 4.3.4 Insights
+#### 4.3.4 Insights
 
 - **Robustness**: TTA improves prediction consistency under visual noise.
 - **Modularity**: Independent models enhance flexibility and debugging.
@@ -271,17 +271,17 @@ Three boards are created:
 
 ---
 
-## 5. Conclusion
+### 5. Conclusion
 
 We successfully developed a modular computer vision system capable of reconstructing a chessboard's state from a single image. The multi-stage design combined deep learning, data augmentation, and precise segmentation to achieve high accuracy even under uncontrolled conditions.
 
-### Key Contributions:
+#### Key Contributions:
 - Modular pipeline: presence, color, and type models
 - Green-corner segmentation for accurate square cropping
 - TTA for improved reliability
 - Cloud deployment with real-time inference
 
-### Future Work:
+#### Future Work:
 - Automatic board detection in cluttered scenes
 - Handling blurred pieces, reflections, and extreme lighting
 - Extension to video-based real-time chess tracking
@@ -290,7 +290,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
 
 ---
 
-## References
+### References
 
 1. Fernández-Ropero, J.A., "Reconocimiento de piezas de ajedrez mediante visión por computador y deep learning," UPM, 2022. https://oa.upm.es/75174/1/TFG_RAFAEL_ALONSO_SIRERA.pdf  
 2. ChessEye, "Chess board recognition using AI," 2023. https://www.chesseye.com  
