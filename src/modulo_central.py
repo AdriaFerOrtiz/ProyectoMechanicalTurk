@@ -63,7 +63,7 @@ class CentralModule:
 
         return list(bloqueadores)
 
-    def buscar_casilla_temporal(self, bloqueador, max_depth=2):
+    def buscar_casilla_temporal(self, bloqueador, destino, max_depth=2):
         """Busca casillas vacías accesibles desde la posición del bloqueador en 1 o 2 movimientos"""
         visitado = set()
         cola = deque()
@@ -75,10 +75,10 @@ class CentralModule:
             if len(camino) > max_depth:
                 continue
             if (x, y) != bloqueador and self.game_state.is_empty(x, y):
-                resultados.append((camino + [(x, y)]))
+                resultados.append(camino)
 
             for nx, ny in self.game_state.vecinos(x, y):
-                if (nx, ny) not in visitado and self.game_state.is_empty(nx, ny):
+                if (nx, ny) not in visitado and self.game_state.is_empty(nx, ny) and (nx, ny) != destino:
                     visitado.add((nx, ny))
                     cola.append(((nx, ny), camino + [(nx, ny)]))
         return resultados
@@ -91,45 +91,43 @@ class CentralModule:
             print("No hay bloqueadores directos.")
             return None
 
-        candidatos_validos = []
-
         for bloqueador in bloqueadores:
-            caminos_temporales = self.buscar_casilla_temporal(bloqueador, max_depth=2)
+            caminos_temporales = self.buscar_casilla_temporal(bloqueador, destino, max_depth=2)
 
-            for camino in caminos_temporales:
-                if not camino:
+            for camino_temporal in caminos_temporales:
+                if not camino_temporal:
                     continue
 
-                destino_temporal = camino[-1]
+                destino_temporal = camino_temporal[-1]
+                # Simula mover bloqueador a posición temporal
                 self.game_state.update_board(bloqueador, destino_temporal)
 
-                # Reintentamos encontrar el camino original ahora sin el bloqueador
                 camino_principal = self.encontrar_camino_simple(origen, destino)
 
-                # Revertimos
+                if camino_principal:
+                    # Simula mover pieza principal
+                    self.game_state.update_board(origen, destino)
+
+                    # Intenta volver a llevar el bloqueador a su posición original
+                    camino_retorno = self.encontrar_camino_simple(destino_temporal, bloqueador)
+
+                    if camino_retorno:
+                        # Reversión de simulaciones
+                        self.game_state.update_board(destino, origen)
+                        self.game_state.update_board(destino_temporal, bloqueador)
+
+                        return {
+                            "temporal": [bloqueador] + camino_temporal,
+                            "principal": camino_principal,
+                            "retorno": camino_retorno
+                        }
+
+                # Revertir simulación si falló
                 self.game_state.update_board(destino_temporal, bloqueador)
 
-                camino.pop()
-                camino.insert(0, bloqueador)
-                if camino_principal:
-                    candidatos_validos.append({
-                        "bloqueador": bloqueador,
-                        "camino_temporal": camino,
-                        "camino_principal": camino_principal,
-                        "num_movimientos_temporales": len(camino),
-                    })
+        print("Ningún bloqueador pudo despejar el camino.")
+        return None
 
-        if not candidatos_validos:
-            print("Ningún bloqueador pudo despejar el camino.")
-            return None
-
-        # Elegimos el que despeja el camino con menos movimientos temporales
-        mejor = min(candidatos_validos, key=lambda x: x["num_movimientos_temporales"])
-
-        return {
-            "temporal": mejor["camino_temporal"],
-            "principal": mejor["camino_principal"]
-        }
     
 def movimiento_completo(tablero, origen, destino):
     modulo = CentralModule()
@@ -149,7 +147,7 @@ def movimiento_completo(tablero, origen, destino):
             print("Instrucciones:")
             print("1. Mover bloqueador temporal:", resultado["temporal"])
             print("2. Ejecutar movimiento principal:", resultado["principal"])
-            print("3. Volver a dejar la pieza en su lugar.")
+            print("3. Volver a dejar la pieza en su lugar:", resultado["retorno"])
             modulo.game_state.update_board(origen, destino)
             ejecutar_movimiento_completo(resultado["principal"], resultado["temporal"])
         else:
