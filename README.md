@@ -33,6 +33,11 @@
 5. [Authors](#-authors)  
 
 ---
+## ⚡ Electrical Wiring Diagram
+
+The following diagram illustrates the complete wiring of the robot's electronic components, including the Arduino, stepper drivers, relays, power supply, and camera system:
+
+![Wiring Diagram](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/mechanicalTurk_bb.png)
 
 ## 🔧 Components  
 | Componente                                        | Imagen                                                                 | Enlace                                                                 |
