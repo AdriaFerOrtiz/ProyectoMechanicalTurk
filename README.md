@@ -15,7 +15,7 @@
 - **Web interface** to play remotely (like Chess.com but with a real robot).  
 
 **Example Scenario**:  
-> A user makes a move on the physical board → The robot’s camera captures the move → Cloud AI calculates the best response → The robot moves a piece with sub-millimeter precision.  
+> A user makes a move on the physical board → The robot’s camera captures the move → Cloud AI calculates the best response → The robot moves the piece by performing the movement intended by the AI.  
 
 ---
 
@@ -64,25 +64,81 @@ The following diagram illustrates the complete wiring of the robot's electronic 
 ---
 
 ## 🖥️ Software Architecture  
-### Core Modules  
-![Module Diagram](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Arquitectura_Software_Completa.png)  
-- **`VisionModule`**: Processes board images (local or cloud).  
-- **`IAModule`**: Calculates moves using Stockfish API.  
-- **`ControlRobot`**: Converts UCI moves to motor commands.  
 
-### Cloud Integration  
-- **Computer Vision**: Images are sent to Google Cloud for piece detection.  
-- **AI Moves**: Stockfish runs on Cloud Run for scalable computation.  
-- **Sync**: Firebase stores game states for remote play.  
+### ☁️ 1. Cloud Infrastructure (Google Cloud)
+
+This project leverages **Google Cloud Platform (GCP)** to handle compute-intensive tasks such as board recognition and AI move generation. The cloud infrastructure is composed of two key services:
+
+#### 🔍 Cloud Function: Board Recognition
+
+A **Cloud Function** receives chessboard images captured via webcam or uploaded through the web interface. These images are processed using a trained machine learning model (TensorFlow or PyTorch), and the function returns a board state encoded as an 8x8 matrix in FEN-like notation.
+
+* **Input:** JPEG or PNG image of the board
+* **Output:** JSON object containing the current board state
+
+#### ♟️ Cloud Run: Stockfish
+
+A **Cloud Run** container hosts a persistent instance of the **Stockfish chess engine**. It takes the current board state and returns:
+
+* The best move according to Stockfish (UCI notation)
+* The evaluation score of the position (e.g., `+0.8`, `Mate in 2`)
+
+#### 🌐 Web-to-Cloud Communication
+
+The frontend web app communicates with these cloud services:
+
+* Image uploads → sent to the Vision Cloud Function
+* Board state → sent to the Stockfish Cloud Run service
+
+#### 🖥️ Web Interface Overview
+
+The web application acts as the **central control panel** for the system. It provides:
+
+* Upload and processing of board images
+* A real-time digital rendering of the chessboard
+* The ability to play against another human or Stockfish
+* Visualization of Stockfish evaluations and suggested moves
+* Communication with the robot via HTTP
+
+![Cloud Diagram](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Cloud_Scheme.png)
+
+---
+
+### 🤖 2. Local Robot Software
+
+The robot’s local software is responsible for interpreting commands from the web interface and executing the necessary mechanical movements. It is modular and divided into several blocks, each with a specific role.
+
+#### 🧩 Local System Architecture (Modules Overview)
+
+| Block                              | Description                                                                                                                                                       |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Server (API Listener)**          | Listens for HTTP POST requests from the web interface. Extracts the move and forwards it to the Central Module.                                                   |
+| **Central Module**                 | Orchestrates the logic: processes the move, checks for obstacles, resolves pathfinding, and delegates to the motor control module.                                |
+| **Game State Manager**             | Stores and updates the internal state of the chessboard. Translates algebraic coordinates into grid positions.                                                    |
+| **Pathfinding & Obstacle Handler** | Detects if a piece is blocked and calculates alternative paths. Can temporarily move blocking pieces, execute the main move, and then restore the original state. |
+| **Motor Control**                  | Translates sequences of square coordinates into physical instructions (`w`, `a`, `s`, `d`) that the robot understands and executes.                               |
+
+#### 🔄 Local Software Diagram
+
+![Local Software Diagram](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img\local_software_scheme.png)
+
+#### 🛠️ Execution Flow Summary
+
+1. The web sends a POST request with the move and current board state.
+2. The server receives the request and passes it to the `CentralModule`.
+3. The central logic:
+
+   * Validates the move
+   * Checks for blockers
+   * Moves the blocker temporarily if necessary
+   * Executes the desired move
+   * Restores any displaced pieces
+4. The motor controller receives movement paths and emits sequential movement signals to the robot (via simulated or actual hardware).
+
 
 ---
 
 # Chessboard and Piece Recognition Using Computer Vision
-
-## Authors
-Eduard José García Mendeleac, Adrià Fernández Ortiz, Luis Adrián Gómez Batista
-
----
 
 ## Abstract
 
