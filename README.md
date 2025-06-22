@@ -35,11 +35,15 @@
 ---
 
 ## 🔧 Components  
-**Hardware**:  
-- **Raspberry Pi Zero** (Control center) - (Precio y link)
-- **Stepper Motors** (NEMA 17 for X/Y axes) - (Precio y link)
-- **Electromagnet** (Piece movement) - (Precio y link)
-- **Pi Camera Module** (Board detection) - (Precio y link)
+| Componente                                        | Imagen                                                                 | Enlace                                                                 |
+|--------------------------------------------------|------------------------------------------------------------------------|------------------------------------------------------------------------|
+| **Motor NEMA 17 / 3.5Kg**                        | ![Motor](./path/to/fe5c3b23-cea6-45c7-a9ad-f711a1c5e8ca.png)           | [Bricogeek](https://tienda.bricogeek.com/motores-paso-a-paso/1360-motor-nema-17-35kg-con-conector-y-cable.html) |
+| **Arduino Uno**                                  | ![Arduino Uno](https://upload.wikimedia.org/wikipedia/commons/3/38/Arduino_Uno_-_R3.jpg) | [Arduino.cc](https://store.arduino.cc/products/arduino-uno-rev3)      |
+| **Driver A4988 (Controlador de motor paso a paso)** | ![A4988](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/A4988_stepper_motor_driver.jpg/320px-A4988_stepper_motor_driver.jpg) | [Pololu](https://www.pololu.com/product/1182) |
+| **Electroimán 12V (OcioDual)**                   | *(Imagen no disponible)*                                               | *(Agregar enlace si se dispone)*                                      |
+| **Relé 5V 10A (para controlar electroimán)**     | *(Imagen no disponible)*                                               | *(Agregar enlace si se dispone)*                                      |
+| **Cámara OV5647 1080p**                          | ![Cámara](./path/to/6058a319-a7b1-4d6f-acd9-45edbf7381c6.png)           | [Bricogeek](https://tienda.bricogeek.com/accesorios-raspberry-pi/1472-camara-5mp-ov5647-1080p-para-raspberry-pi-zero.html) |
+
 
 **Software**:  
 - **Google Cloud Vision** (Computer vision)  
