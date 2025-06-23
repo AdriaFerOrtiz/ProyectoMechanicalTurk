@@ -279,16 +279,17 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
 
 ### Components List
 
-1. **Axes** (2 pieces)  
+**1. Axis (4 pieces)**
 
-**Description:** Axes that allow movement along the X and Y axes.  
-
-**Dimensions:**  
-- **Length:** 40.0 cm  
-- **Width:** 5.2 cm  
-- **Height:** 6.5 cm  
-
-**File:** `axe.stl`
+*  **Description**: Axes that allow movement along the X and Y axes.
+*  **Dimensions**:
+     * Length: 20 cm
+       
+     * Width: 5.2 cm
+       
+     * Height: 6.5 cm
+       
+*  **File**: axis.stl
 ---
 
 ## ✨ Amazing Contributions  
