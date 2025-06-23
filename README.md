@@ -28,9 +28,10 @@
 2. [Hardware Design](#-hardware-design)  
 3. [Software Architecture](#-software-architecture)  
    - [Core Modules](#core-modules)  
-   - [Cloud Integration](#cloud-integration)  
-4. [Contributions](#-amazing-contributions)  
-5. [Authors](#-authors)  
+   - [Cloud Integration](#cloud-integration)
+4. [3D components](#-3d-components)  
+5. [Contributions](#-amazing-contributions)  
+6. [Authors](#-authors)  
 
 ---
 ## ⚡ Electrical Wiring Diagram
@@ -274,7 +275,17 @@ We successfully developed a modular computer vision system capable of reconstruc
 This project demonstrates the feasibility of high-fidelity chessboard state reconstruction and opens paths for future applications in robotics, game analysis, and education.
 
 ---
+## 🔧 3D Components
 
+### Components List
+
+1. **Axes** (2 pieces)  
+**Description:** Axes that allow movement along the X and Y axes.
+**Dimensions:**  
+- **Lenght:** 40.0 cm  
+- **Width:** 5.2 cm  
+- **Height:** 6.5 cm  
+**File:** `axe.stl`
 ---
 
 ## ✨ Amazing Contributions  
