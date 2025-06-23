@@ -291,6 +291,8 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
        
 *  **File**: axis.stl
 
+![Axis Preview](3D_files/axis.stl)
+
 **2. Box**
 
 *  **Description**: Box where all the robot's mechanism is
@@ -327,7 +329,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
        
 *  **File**: cylinder.stl
 
-**5. Lace_piece**
+**5. Lid_brace**
 
 *  **Description**: Lace piece for the box lid.
 *  **Dimensions**:
@@ -337,7 +339,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
        
      * Height: 1 cm
        
-*  **File**: lace_piece.stl
+*  **File**: lid_brace.stl
 
 **6. Platform (2 pieces)**
 
@@ -371,7 +373,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
 | 2 | Box                 | 1      | box.stl            |
 | 3 | Box Lid             | 1      | box_lid.stl        |
 | 4 | Cylinders           | 2      | cylinder.stl       |
-| 5 | Lace Piece          | 1      | lace_piece.stl     |
+| 5 | Lid Brace           | 1      | lid_brace.stl      |
 | 6 | Platform            | 2      | platform.stl       |
 | 7 | Toothed Cylinders   | 2      | toothed_cylinders.stl |
 
