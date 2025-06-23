@@ -290,6 +290,91 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
      * Height: 6.5 cm
        
 *  **File**: axis.stl
+
+**2. Box**
+
+*  **Description**: Box where all the robot's mechanism is
+*  **Dimensions**:
+     * Length: 45 cm
+       
+     * Width: 45 cm
+       
+     * Height: 20 cm
+       
+*  **File**: box.svg
+
+**3. Box_lid**
+
+*  **Description**: Lid of the box where the chessboard is painted
+*  **Dimensions**:
+     * Length: 45 cm
+       
+     * Width: 45 cm
+       
+     * Height: 0.6 cm
+       
+*  **File**: box_lid.stl
+
+**4. Cylinders (2 pieces)**
+
+*  **Description**: Support cylinders for the movement of the axis.
+*  **Dimensions**:
+     * Length: 0.8 cm
+       
+     * Width: 0.8 cm
+       
+     * Height: 3 cm
+       
+*  **File**: cylinder.stl
+
+**5. Lace_piece**
+
+*  **Description**: Lace piece for the box lid.
+*  **Dimensions**:
+     * Length: 42 cm
+       
+     * Width: 42 cm
+       
+     * Height: 1 cm
+       
+*  **File**: lace_piece.stl
+
+**6. Platform (2 pieces)**
+
+*  **Description**: Platform to move the electromagnet around the chessboard.
+*  **Dimensions**:
+     * Length: 12 cm
+       
+     * Width: 5.7 cm
+       
+     * Height: 1 cm
+       
+*  **File**: platform.stl
+
+**7. Toothed_cylinders (2 pieces)**
+
+*  **Description**: Toothed cylinders to move along the axes.
+*  **Dimensions**:
+     * Length: 0.9 cm
+       
+     * Width: 0.9 cm
+       
+     * Height: 1.5 cm
+       
+*  **File**: toothed_cylinders.stl
+
+### Summary Table
+
+| # | Component           | Pieces | File               |
+|---|---------------------|--------|--------------------|
+| 1 | Axis                | 4      | axis.stl           |
+| 2 | Box                 | 1      | box.stl            |
+| 3 | Box Lid             | 1      | box_lid.stl        |
+| 4 | Cylinders           | 2      | cylinder.stl       |
+| 5 | Lace Piece          | 1      | lace_piece.stl     |
+| 6 | Platform            | 2      | platform.stl       |
+| 7 | Toothed Cylinders   | 2      | toothed_cylinders.stl |
+
 ---
 
 ## ✨ Amazing Contributions  
