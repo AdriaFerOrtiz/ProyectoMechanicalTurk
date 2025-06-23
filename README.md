@@ -140,16 +140,6 @@ The robot’s local software is responsible for interpreting commands from the w
 
 ## 3. Chessboard and Piece Recognition Using Computer Vision
 
-### Abstract
-
-This project presents the development of a computer vision system capable of automatically reconstructing the state of a physical chessboard from a single top-down image. The system combines image processing techniques, convolutional neural networks (CNNs), and test-time data augmentation to detect the presence, color, and type of each piece across the 64 squares. A modular approach was chosen, with three specialized models improving the system's robustness and interpretability. Test-time augmentation (TTA) further boosts prediction reliability under adverse visual conditions. Experiments demonstrate high accuracy: over 99% in piece presence detection, over 98% in color classification, and nearly 90% in piece type identification. This work validates the viability of accurate real-world board reconstruction in uncontrolled environments and lays a foundation for robotics, education, and automated game analysis.
-
----
-
-### Keywords
-
-Computer Vision · Chess Recognition · Deep Learning · CNN · Image Segmentation · Piece Classification · Test-Time Augmentation · Modular Architecture
-
 ---
 
 ### 1. Introduction
@@ -275,11 +265,6 @@ Three boards are created:
 
 We successfully developed a modular computer vision system capable of reconstructing a chessboard's state from a single image. The multi-stage design combined deep learning, data augmentation, and precise segmentation to achieve high accuracy even under uncontrolled conditions.
 
-#### Key Contributions:
-- Modular pipeline: presence, color, and type models
-- Green-corner segmentation for accurate square cropping
-- TTA for improved reliability
-- Cloud deployment with real-time inference
 
 #### Future Work:
 - Automatic board detection in cluttered scenes
@@ -289,15 +274,6 @@ We successfully developed a modular computer vision system capable of reconstruc
 This project demonstrates the feasibility of high-fidelity chessboard state reconstruction and opens paths for future applications in robotics, game analysis, and education.
 
 ---
-
-### References
-
-1. Fernández-Ropero, J.A., "Reconocimiento de piezas de ajedrez mediante visión por computador y deep learning," UPM, 2022. https://oa.upm.es/75174/1/TFG_RAFAEL_ALONSO_SIRERA.pdf  
-2. ChessEye, "Chess board recognition using AI," 2023. https://www.chesseye.com  
-3. Chessify, "Chess board scanner with Stockfish integration," 2023. https://www.chessify.me  
-4. DGT Projects, "Digital chess board with reed switches," 2021. https://www.dgtprojects.com  
-5. Novag, "NOVAG CETRINE electronic chess computer," 2020. https://www.novag.com  
-6. Stockfish, "Open-source chess engine," 2023. https://stockfishchess.org  
 
 ---
 
