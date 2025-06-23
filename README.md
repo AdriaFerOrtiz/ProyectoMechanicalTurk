@@ -291,7 +291,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
        
 *  **File**: axis.stl
 
-![Axis Preview](3D_files/images/axis.png)
+<img src="3D_files/images/axis.png" alt="Axis Preview" width="300" style="border-radius: 10px;"/>
 
 **2. Box**
 
