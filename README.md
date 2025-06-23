@@ -291,6 +291,8 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
        
 *  **File**: axis.stl
 
+![Axis Preview](3D_files/images/axis.png)
+
 **2. Box**
 
 *  **Description**: Box where all the robot's mechanism is
