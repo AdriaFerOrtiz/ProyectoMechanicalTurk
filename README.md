@@ -291,8 +291,6 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
        
 *  **File**: axis.stl
 
-![Axis Preview](3D_files/axis.stl)
-
 **2. Box**
 
 *  **Description**: Box where all the robot's mechanism is
@@ -376,6 +374,16 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
 | 5 | Lid Brace           | 1      | lid_brace.stl      |
 | 6 | Platform            | 2      | platform.stl       |
 | 7 | Toothed Cylinders   | 2      | toothed_cylinders.stl |
+
+### How to Use the 3D Files
+
+1. **Download**: All STL files are located in the `/3D_files` directory of this repository.
+2. **Open**: Use a slicer like [Ultimaker Cura](https://ultimaker.com/software/ultimaker-cura) or [PrusaSlicer](https://www.prusa3d.com/page/prusaslicer_424/) to open the `.stl` files.
+3. **Print Settings** (recommended):
+   - Layer height: 0.2 mm
+   - Infill: 20% – 40%
+   - Supports: As needed depending on the piece
+   - Material: PLA or PETG
 
 ---
 
