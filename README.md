@@ -290,8 +290,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
      * Height: 6.5 cm
        
 *  **File**: axis.stl
-
-<img src="3D_files/images/axis.png" alt="Axis Preview" width="300" style="border-radius: 10px;"/>
+<img src="3D_files/images/axis.png" alt="Axis Preview" width="600" style="border-radius: 10px;"/>
 
 **2. Box**
 
@@ -304,6 +303,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
      * Height: 20 cm
        
 *  **File**: box.svg
+<img src="3D_files/images/box.png" alt="Axis Preview" width="600" style="border-radius: 10px;"/>
 
 **3. Box_lid**
 
@@ -316,6 +316,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
      * Height: 0.6 cm
        
 *  **File**: box_lid.stl
+<img src="3D_files/images/box_lid.png" alt="Axis Preview" width="600" style="border-radius: 10px;"/>
 
 **4. Cylinders (2 pieces)**
 
@@ -328,6 +329,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
      * Height: 3 cm
        
 *  **File**: cylinder.stl
+<img src="3D_files/images/cylinder.png" alt="Axis Preview" width="600" style="border-radius: 10px;"/>
 
 **5. Lid_brace**
 
@@ -340,6 +342,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
      * Height: 1 cm
        
 *  **File**: lid_brace.stl
+<img src="3D_files/images/lid_brace.png" alt="Axis Preview" width="600" style="border-radius: 10px;"/>
 
 **6. Platform (2 pieces)**
 
@@ -352,6 +355,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
      * Height: 1 cm
        
 *  **File**: platform.stl
+<img src="3D_files/images/platform.png" alt="Axis Preview" width="600" style="border-radius: 10px;"/>
 
 **7. Toothed_cylinders (2 pieces)**
 
@@ -364,6 +368,7 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
      * Height: 1.5 cm
        
 *  **File**: toothed_cylinders.stl
+<img src="3D_files/images/toothed_cylinder.png" alt="Axis Preview" width="600" style="border-radius: 10px;"/>
 
 ### Summary Table
 
