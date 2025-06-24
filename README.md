@@ -261,12 +261,6 @@ The `crop_and_divide_board` function uses green markers to accurately crop the b
 
 </table>
 
-<p><strong>Further steps:</strong> Each of the 64 cells can be analyzed using augmentation and three neural models (presence, color, and type) to reconstruct the full board configuration.</p>
-
-
-<p><strong>Further steps:</strong> After this point, the board is cropped slightly to remove margin and then divided into 64 squares. Each cell can then be analyzed individually using augmentation and specialized models (e.g., for piece recognition).</p>
-
-
 **Test-Time Augmentation (TTA)**  
 Each square is augmented by:
 - Rotations (90°, 180°, 270°)
