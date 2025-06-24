@@ -167,10 +167,10 @@ The system is based on a CNN trained on a custom dataset of manually captured an
 
 #### Processing Pipeline:
 1. **Image Capture**
-2. **Board Detection and Square Segmentation**
-3. **Square-wise Filtering**
-4. **CNN-based Classification**
-5. **Translation to Algebraic Notation**
+3. **Board Detection and Square Segmentation**
+4. **Square-wise Filtering**
+5. **CNN-based Classification**
+6. **Translation to Algebraic Notation**
 
 The entire process runs in a cloud function that receives an image and returns an 8x8 matrix of recognized positions. The system’s accuracy has been validated per square and per piece type, confirming its feasibility for robotic integration.
 
@@ -207,7 +207,12 @@ A modular system was implemented with three independent models:
 
 **Board Segmentation**  
 The `crop_and_divide_board` function uses green markers to accurately crop the board into 64 squares. A margin parameter ensures square-centered cropping.
-
+![Figure1](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_1.png)
+![Figure2](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_2.png)
+![Figure3](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_3.png)
+![Figure4](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_4.png)
+![Figure5](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_5.png)
+![Figure6](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_6.png)
 **Test-Time Augmentation (TTA)**  
 Each square is augmented by:
 - Rotations (90°, 180°, 270°)
