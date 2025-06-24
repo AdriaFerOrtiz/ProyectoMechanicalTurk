@@ -207,12 +207,17 @@ A modular system was implemented with three independent models:
 
 **Board Segmentation**  
 The `crop_and_divide_board` function uses green markers to accurately crop the board into 64 squares. A margin parameter ensures square-centered cropping.
-![Figure1](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_1.png)
-![Figure2](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_2.png)
-![Figure3](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_3.png)
-![Figure4](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_4.png)
-![Figure5](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_5.png)
-![Figure6](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_6.png)
+
+<p align="center">
+  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_1.png?raw=true" width="220"/>
+  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_2.png?raw=true" width="220"/>
+  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_3.png?raw=true" width="220"/>
+  <br/>
+  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_4.png?raw=true" width="220"/>
+  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_5.png?raw=true" width="220"/>
+  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_6.png?raw=true" width="220"/>
+</p>
+
 **Test-Time Augmentation (TTA)**  
 Each square is augmented by:
 - Rotations (90°, 180°, 270°)
