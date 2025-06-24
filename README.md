@@ -267,37 +267,13 @@ Each square is augmented by:
 - Flips (horizontal/vertical)
 - Filters (contrast, gradient, etc.)
 
-<table>
-  <tr>
-    <th>Filter</th>
-    <th>Image</th>
-  </tr>
-
-  <tr>
-    <td><strong>1. Filter1</strong></td>
-    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_8.png?raw=true" width="400"/></td>
-  </tr>
-
-  <tr>
-    <td><strong>2. Filter2</strong></td>
-    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_9.png?raw=true" width="400"/></td>
-  </tr>
-
-  <tr>
-    <td><strong>3. Filter3</strong></td>
-    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_10.png?raw=true" width="400"/></td>
-  </tr>
-
-  <tr>
-    <td><strong>4. Filter4</strong></td>
-    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_11.png?raw=true" width="400"/></td>
-  </tr>
-
-  <tr>
-    <td><strong>5. Filter5</strong></td>
-    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_12.png?raw=true" width="400"/></td>
-  </tr>
-</table>
+| Filter       | Image        |
+|--------------|--------------|
+| **1. Filter1** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_8.png?raw=true" width="100%"/> |
+| **2. Filter2** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_9.png?raw=true" width="100%"/> |
+| **3. Filter3** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_10.png?raw=true" width="100%"/> |
+| **4. Filter4** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_11.png?raw=true" width="100%"/> |
+| **5. Filter5** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_12.png?raw=true" width="100%"/> |
 
 **Specialized Model Inference**  
 Each augmented square is processed through:
