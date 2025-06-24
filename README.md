@@ -267,6 +267,44 @@ Each square is augmented by:
 - Flips (horizontal/vertical)
 - Filters (contrast, gradient, etc.)
 
+<table>
+  <tr>
+    <th>Step</th>
+    <th>Image</th>
+    <th>Description</th>
+  </tr>
+
+  <tr>
+    <td><strong>1. Filter1</strong></td>
+    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_8.png?raw=true" width="400"/></td>
+    <td>One of the 64 individual square images extracted after grid division. Each of these will undergo augmentation and classification.</td>
+  </tr>
+
+  <tr>
+    <td><strong>2. Filter2</strong></td>
+    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_9.png?raw=true" width="400"/></td>
+    <td>Multiple augmented versions (rotated, flipped, filtered) of a single square. This supports more robust model inference.</td>
+  </tr>
+
+  <tr>
+    <td><strong>3. Filter3</strong></td>
+    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_10.png?raw=true" width="400"/></td>
+    <td>Binary prediction map showing which squares are considered to contain a chess piece.</td>
+  </tr>
+
+  <tr>
+    <td><strong>4. Filter4</strong></td>
+    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_11.png?raw=true" width="400"/></td>
+    <td>Classification output identifying the color (black or white) of the detected pieces.</td>
+  </tr>
+
+  <tr>
+    <td><strong>5. Filter5</strong></td>
+    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_12.png?raw=true" width="400"/></td>
+    <td>Final prediction showing piece types (e.g., pawn, knight, king) on the detected occupied squares.</td>
+  </tr>
+</table>
+
 **Specialized Model Inference**  
 Each augmented square is processed through:
 - **Presence Model** (binary classification)
