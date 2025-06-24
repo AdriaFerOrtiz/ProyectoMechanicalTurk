@@ -208,15 +208,55 @@ A modular system was implemented with three independent models:
 **Board Segmentation**  
 The `crop_and_divide_board` function uses green markers to accurately crop the board into 64 squares. A margin parameter ensures square-centered cropping.
 
-<p align="center">
-  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_1.png?raw=true" width="220"/>
-  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_2.png?raw=true" width="220"/>
-  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_3.png?raw=true" width="220"/>
-  <br/>
-  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_4.png?raw=true" width="220"/>
-  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_5.png?raw=true" width="220"/>
-  <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_6.png?raw=true" width="220"/>
-</p>
+<h4>Step-by-Step Image Processing Pipeline</h4>
+
+<table>
+  <tr>
+    <th>Step</th>
+    <th>Image</th>
+    <th>Description</th>
+  </tr>
+
+  <tr>
+    <td><strong>1. Original Image</strong></td>
+    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_1.png?raw=true" width="250"/></td>
+    <td>The input image as captured from the camera. It shows the chessboard including the green corner markers.</td>
+  </tr>
+
+  <tr>
+    <td><strong>2. HSV Conversion</strong></td>
+    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_2.png?raw=true" width="250"/></td>
+    <td>The image converted to HSV color space, which is more suitable for color filtering (used to detect green markers).</td>
+  </tr>
+
+  <tr>
+    <td><strong>3. Green Mask</strong></td>
+    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_3.png?raw=true" width="250"/></td>
+    <td>A binary mask that highlights areas with green color based on a defined HSV range. This helps isolate the board corners.</td>
+  </tr>
+
+  <tr>
+    <td><strong>4. Corner Detection</strong></td>
+    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_4.png?raw=true" width="250"/></td>
+    <td>Green circular blobs are detected as corners using contour filtering and centroid extraction. These are used to define the board's geometry.</td>
+  </tr>
+
+  <tr>
+    <td><strong>5. Ordered Corners</strong></td>
+    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_5.png?raw=true" width="250"/></td>
+    <td>The detected corners are reordered to follow a consistent pattern: top-left, top-right, bottom-right, bottom-left. This is critical for perspective correction.</td>
+  </tr>
+
+  <tr>
+    <td><strong>6. Perspective Correction</strong></td>
+    <td><img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_6.png?raw=true" width="250"/></td>
+    <td>The chessboard is warped into a square using a perspective transform. This produces a flat, aligned top-down view of the board.</td>
+  </tr>
+
+</table>
+
+<p><strong>Further steps:</strong> After this point, the board is cropped slightly to remove margin and then divided into 64 squares. Each cell can then be analyzed individually using augmentation and specialized models (e.g., for piece recognition).</p>
+
 
 **Test-Time Augmentation (TTA)**  
 Each square is augmented by:
