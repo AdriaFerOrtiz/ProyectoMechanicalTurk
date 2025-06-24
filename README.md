@@ -24,23 +24,25 @@
 ---
 
 ## 📖 Table of Contents  
-1. [Components](#-components)  
-2. [Hardware Design](#-hardware-design)  
-3. [Software Architecture](#-software-architecture)  
-   - [Core Modules](#core-modules)  
-   - [Cloud Integration](#cloud-integration)
-4. [3D components](#-3d-components)  
-5. [Contributions](#-amazing-contributions)  
-6. [Authors](#-authors)  
+1. [Electrical Wiring Diagram](#electrical-wiring-diagram)
+2. [Components](#components)  
+3. [Hardware Design](#hardware-design)  
+4. [Software Architecture](#software-architecture)  
+   - [Cloud Infrastructure (Google Cloud)](#cloud-infrastructure-(google-cloud))  
+   - [Local Robot Software](#-2.-local-robot-software)
+   - [Chessboard and Piece Recognition Using Computer Vision](#-3.-chessboard-and-pice-recognition-using-computer-vision)
+5. [3D components](#3d-components)  
+6. [Contributions](#amazing-contributions)  
+7. [Authors](#authors)  
 
 ---
-## ⚡ Electrical Wiring Diagram
+## Electrical Wiring Diagram
 
 The following diagram illustrates the complete wiring of the robot's electronic components, including the Arduino, stepper drivers, relays, power supply, and camera system:
 
 ![Wiring Diagram](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/mechanicalTurk_bb.png)
 
-## 🔧 Components  
+## Components
 | Componente                                        | Imagen                                                                 | Enlace                                                                 |
 |--------------------------------------------------|------------------------------------------------------------------------|------------------------------------------------------------------------|
 | **Motor NEMA 17 / 3.5 Kg**                        | ![NEMA17](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/NEMA17.jpg) | [Bricogeek](https://tienda.bricogeek.com/motores-paso-a-paso/1360-motor-nema-17-35kg-con-conector-y-cable.html) |
@@ -59,14 +61,14 @@ The following diagram illustrates the complete wiring of the robot's electronic 
 
 ---
 
-## 🛠️ Hardware Design  
+## Hardware Design
 *Cartesian robot design with labeled axes and component placements.*  
 
 ---
 
-# 🖥️ Software Architecture  
+## Software Architecture
 
-## ☁️ 1. Cloud Infrastructure (Google Cloud)
+### 1. Cloud Infrastructure (Google Cloud)
 
 This project leverages **Google Cloud Platform (GCP)** to handle compute-intensive tasks such as board recognition and AI move generation. The cloud infrastructure is composed of two key services:
 
@@ -105,7 +107,7 @@ The web application acts as the **central control panel** for the system. It pro
 
 ---
 
-## 🤖 2. Local Robot Software
+### 🤖 2. Local Robot Software
 
 The robot’s local software is responsible for interpreting commands from the web interface and executing the necessary mechanical movements. It is modular and divided into several blocks, each with a specific role.
 
@@ -139,11 +141,11 @@ The robot’s local software is responsible for interpreting commands from the w
 
 ---
 
-## 3. Chessboard and Piece Recognition Using Computer Vision
+### 3. Chessboard and Piece Recognition Using Computer Vision
 
 ---
 
-### 1. Introduction
+#### 1. Introduction
 
 This project is part of a broader initiative to build a fully autonomous chess-playing robot. Our contribution focuses on the vision system, which identifies the real-time state of a physical chessboard via an overhead camera.
 
@@ -151,7 +153,7 @@ We employed image processing and deep learning techniques to detect the board, s
 
 ---
 
-### 2. Related Work
+#### 2. Related Work
 
 Prior research explored digitizing chessboards using computer vision. A project at the Universidad Politécnica de Madrid applied an Xception network with perspective transforms, achieving 98% accuracy in piece recognition. Stanford proposed combining shape descriptors with the Hough transform to recognize boards from angled views, achieving 70–100% accuracy depending on the viewpoint.
 
@@ -159,7 +161,7 @@ Commercial apps like ChessEye and Chessify use CNNs on mobile devices to recogni
 
 ---
 
-### 3. System Overview
+#### 3. System Overview
 
 The system is based on a CNN trained on a custom dataset of manually captured and labeled chessboard images.
 
@@ -174,13 +176,13 @@ The entire process runs in a cloud function that receives an image and returns a
 
 ---
 
-### 4. Experiments and Results
+#### 4. Experiments and Results
 
-#### 4.1 Initial Approach
+##### 4.1 Initial Approach
 
 An overhead image was captured, converted to grayscale, and processed using the Canny edge detector to identify board lines. However, line intersections were inconsistent, leading to incorrect segmentation and failure to isolate all 64 squares. Issues included uneven lighting and imprecise line detection.
 
-#### 4.2 Improved Board Segmentation
+##### 4.2 Improved Board Segmentation
 
 We introduced green corner markers on the board to aid square segmentation. These markers enabled reliable detection of board corners, and the board was successfully divided into 64 square images.
 
@@ -190,9 +192,9 @@ Square segmentation still had occasional misalignments, which affected classific
 
 ---
 
-### 4.3 Final Version
+#### 4.3 Final Version
 
-#### 4.3.1 Concept
+##### 4.3.1 Concept
 
 A modular system was implemented with three independent models:
 - **Presence Model**: Detects if a piece exists in the square.
@@ -201,7 +203,7 @@ A modular system was implemented with three independent models:
 
 **Test-Time Augmentation (TTA)** is used to increase reliability: each square is augmented with rotations, flips, and filters, and the final prediction is averaged across all augmentations.
 
-#### 4.3.2 Procedure
+##### 4.3.2 Procedure
 
 **Board Segmentation**  
 The `crop_and_divide_board` function uses green markers to accurately crop the board into 64 squares. A margin parameter ensures square-centered cropping.
@@ -228,7 +230,7 @@ Three boards are created:
 
 ---
 
-#### 4.3.3 Quantitative Results
+##### 4.3.3 Quantitative Results
 
 **Presence Model**  
 - Accuracy: >99%
@@ -254,7 +256,7 @@ Three boards are created:
 
 ---
 
-#### 4.3.4 Insights
+##### 4.3.4 Insights
 
 - **Robustness**: TTA improves prediction consistency under visual noise.
 - **Modularity**: Independent models enhance flexibility and debugging.
@@ -262,12 +264,12 @@ Three boards are created:
 
 ---
 
-### 5. Conclusion
+#### 5. Conclusion
 
 We successfully developed a modular computer vision system capable of reconstructing a chessboard's state from a single image. The multi-stage design combined deep learning, data augmentation, and precise segmentation to achieve high accuracy even under uncontrolled conditions.
 
 
-#### Future Work:
+##### Future Work:
 - Automatic board detection in cluttered scenes
 - Handling blurred pieces, reflections, and extreme lighting
 - Extension to video-based real-time chess tracking
@@ -275,7 +277,7 @@ We successfully developed a modular computer vision system capable of reconstruc
 This project demonstrates the feasibility of high-fidelity chessboard state reconstruction and opens paths for future applications in robotics, game analysis, and education.
 
 ---
-## 🔧 3D Components
+## 3D Components
 
 ### Components List
 
@@ -394,14 +396,14 @@ This project demonstrates the feasibility of high-fidelity chessboard state reco
 
 ---
 
-## ✨ Amazing Contributions  
+## Amazing Contributions  
 - **Obstacle Avoidance**: The robot plans alternative paths if pieces block movement.  
 - **Low-Cost Precision**: Achieves sub-millimeter accuracy with budget stepper motors.  
 - **Social Impact**: Makes chess accessible for visually impaired players via physical interaction.  
 
 ---
 
-## 👥 Authors  
+## Authors  
 - Eduard José García Mendeleac
 - Adrià Fernández Ortiz
 - Luis Adrián Gómez Batista
