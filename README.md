@@ -269,11 +269,11 @@ Each square is augmented by:
 
 | Filter       | Image        |
 |--------------|--------------|
-| **1. Filter1** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_8.png?raw=true" width="100%"/> |
-| **2. Filter2** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_9.png?raw=true" width="100%"/> |
-| **3. Filter3** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_10.png?raw=true" width="100%"/> |
-| **4. Filter4** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_11.png?raw=true" width="100%"/> |
-| **5. Filter5** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_12.png?raw=true" width="100%"/> |
+| **Filter1** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_8.png?raw=true" width="100%"/> |
+| **Filter2** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_9.png?raw=true" width="100%"/> |
+| **Filter3** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_10.png?raw=true" width="100%"/> |
+| **Filter4** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_11.png?raw=true" width="100%"/> |
+| **Filter5** | <img src="https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/Figure_12.png?raw=true" width="100%"/> |
 
 **Specialized Model Inference**  
 Each augmented square is processed through:
