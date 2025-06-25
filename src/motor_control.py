@@ -1,4 +1,5 @@
 import time
+import serial
 
 def generar_instrucciones_movimiento(camino):
     """
@@ -44,9 +45,8 @@ def generar_camino_simple(origen, destino):
 
     return camino
 
-def enviar_a_robot(letra):
-    # Ejemplo: enviar por puerto serie
-    print(f"Enviando al robot: {letra}")
+def enviar_a_robot(letra, arduino):
+    arduino.write(letra.encode())
 
 def ejecutar_movimiento_completo(camino_principal, camino_bloqueador=None, origen_robot=(4, 4), delay=0.5):
     """
@@ -56,6 +56,9 @@ def ejecutar_movimiento_completo(camino_principal, camino_bloqueador=None, orige
     - origen_robot: casilla base del robot (por defecto e4 = (4, 4))
     """
 
+    arduino = serial.Serial('COM9', 9600)
+    time.sleep(2)  # Espera a que se establezca la conexión
+
     # Función auxiliar para enviar los movimientos de un camino
     def mover(camino, comentario=""):
         if not camino or len(camino) < 2:
@@ -64,7 +67,7 @@ def ejecutar_movimiento_completo(camino_principal, camino_bloqueador=None, orige
         instrucciones = generar_instrucciones_movimiento(camino)
         print(f"[DEBUG] Movimiento ({comentario}): {camino}")
         for letra in instrucciones:
-            enviar_a_robot(letra)
+            enviar_a_robot(letra, arduino)
             time.sleep(delay)
         return camino[-1]
 
@@ -75,20 +78,20 @@ def ejecutar_movimiento_completo(camino_principal, camino_bloqueador=None, orige
         mover(camino_hacia_bloqueador, "hacia bloqueador")
 
         # Activar electroimán
-        enviar_a_robot("e")
+        enviar_a_robot("e", arduino)
 
         # Mover el bloqueador
         pos_final_bloqueador = mover(camino_bloqueador, "bloqueador")
 
         # Desactivar el electroimán
-        enviar_a_robot("f")
+        enviar_a_robot("f", arduino)
 
         # 2. Movimiento directo a la pieza principal (sin volver al origen)
         camino_hacia_principal = generar_camino_simple(pos_final_bloqueador, camino_principal[0])
         mover(camino_hacia_principal, "hacia principal")
 
         # Activar electroimán
-        enviar_a_robot("e")
+        enviar_a_robot("e", arduino)
 
     else:
         # Si no hay bloqueador, ir desde origen a la pieza principal
@@ -96,13 +99,13 @@ def ejecutar_movimiento_completo(camino_principal, camino_bloqueador=None, orige
         mover(camino_hacia_principal, "hacia principal")
 
         # Activar electroimán
-        enviar_a_robot("e")
+        enviar_a_robot("e", arduino)
 
     # 3. Mover la pieza principal
     pos_final_principal = mover(camino_principal, "pieza principal")
 
     # Desactivar el electroimán
-    enviar_a_robot("f")
+    enviar_a_robot("f", arduino)
 
     # 5. Devolver la pieza bloqueadora a su lugar (si existe)
     if camino_bloqueador:
@@ -111,14 +114,14 @@ def ejecutar_movimiento_completo(camino_principal, camino_bloqueador=None, orige
         mover(camino_ir_bloqueador, "ir a bloqueador temporal")
 
         # Activar electroimán
-        enviar_a_robot("e")
+        enviar_a_robot("e", arduino)
 
         # Volver a su posición original
         camino_revertido = list(reversed(camino_bloqueador))
         mover(camino_revertido, "devolver bloqueador")
 
         # Desactivar el electroimán
-        enviar_a_robot("f")
+        enviar_a_robot("f", arduino)
 
         # 4. Volver al origen desde la pieza principal
         camino_regreso = generar_camino_simple(camino_bloqueador[0], origen_robot)
@@ -129,3 +132,4 @@ def ejecutar_movimiento_completo(camino_principal, camino_bloqueador=None, orige
         mover(camino_regreso, "regreso al origen")
 
     print("[INFO] Movimiento completo realizado.")
+    arduino.close()
