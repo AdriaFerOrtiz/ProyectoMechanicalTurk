@@ -139,10 +139,10 @@ firebase deploy
 
 The local code is in the `src/` folder and includes:
 
-* `central_module.py`: Handles logic and piece coordination.
+* `modulo_central.py`: Handles logic and piece coordination.
 * `motor_control.py`: Translates paths into robot movement commands.
 * `game_state.py`: Board representation and utilities.
-* `robot_server.py`: A simulated Flask server to receive move commands.
+* `conexion_web.py`: A simulated Flask server to receive move commands.
 
 #### ✅ Requirements
 
@@ -167,7 +167,7 @@ Launch the Flask server to allow robot communication:
 
 ```bash
 cd src
-python robot_server.py
+python conexion_web.py
 ```
 
 This server listens on port `5000` and logs moves received from the web interface.
