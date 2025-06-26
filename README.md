@@ -21,6 +21,8 @@
 
 ## 📽️ Demo  
 
+[Video of the robot in action](https://drive.google.com/file/d/1c9VE16P7BDXVjnB_LtAGnboGmgiGng_8/view?usp=drive_link )
+
 ---
 
 ## 📖 Table of Contents  
