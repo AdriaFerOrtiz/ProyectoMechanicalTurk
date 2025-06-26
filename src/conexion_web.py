@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS  
 from modulo_central import movimiento_completo
-import time
 
 app = Flask(__name__)
 CORS(app)  # ✅ Permite CORS desde cualquier origen

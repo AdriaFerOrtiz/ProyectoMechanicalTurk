@@ -26,16 +26,151 @@
 ---
 
 ## 📖 Table of Contents  
-1. [Electrical Wiring Diagram](#electrical-wiring-diagram)
-2. [Components](#components)  
-3. [Hardware Design](#hardware-design)  
-4. [Software Architecture](#software-architecture)  
+1. [Installation](#installation)
+   - [Google Cloud Plataform (GCP)](#-1-google-cloud-platform-gcp)
+   - [Local Robot Sofrware](#2-local-software)
+2. [Electrical Wiring Diagram](#electrical-wiring-diagram)
+3. [Components](#components)  
+4. [Hardware Design](#hardware-design)  
+5. [Software Architecture](#software-architecture)  
    - [Cloud Infrastructure (Google Cloud)](#1-cloud-infrastructure-google-cloud)  
    - [Local Robot Software](#-2-local-robot-software)
    - [Chessboard and Piece Recognition Using Computer Vision](#3-chessboard-and-piece-recognition-using-computer-vision)
-5. [3D components](#3d-components)  
-6. [Contributions](#amazing-contributions)  
-7. [Authors](#authors)  
+6. [3D components](#3d-components)  
+7. [Contributions](#amazing-contributions)  
+8. [Authors](#authors)  
+
+---
+
+## Installation
+
+This project is composed of two main components:
+
+1. 🌐 The **Google Cloud** infrastructure, which handles vision and chess engine logic.
+2. 🤖 The **local robot software**, which controls physical movements and logic.
+
+---
+
+### 🌐 1. Google Cloud Platform (GCP)
+
+#### 📁 Project structure
+
+In the `Google-Cloud/` directory, you will find:
+
+* `chessboard_model/`: (Not required for installation) Training code for the original vision model.
+* `chessboard_visual_function/`: Code used in the **Cloud Function** for detecting the board and pieces from an image.
+* `chessboard_web/`: Frontend code and Firebase project. Contains:
+
+  * `public/`: The web app (`index.html`, `script.js`, `styles.css`).
+* `stockfish_cloud_run/`: Code for deploying **Stockfish** to **Cloud Run**.
+
+#### ☁️ Google Cloud Setup
+
+Make sure you have the Google Cloud CLI installed and authenticated:
+
+```bash
+gcloud auth login
+gcloud config set project [YOUR_PROJECT_ID]
+```
+
+##### 🔸 Deploy the Vision Cloud Function
+
+Go to the folder:
+
+```bash
+cd Google-Cloud/chessboard_visual_function
+```
+
+Deploy the function:
+
+```bash
+gcloud functions deploy predict_chessboard \
+  --runtime python310 \
+  --trigger-http \
+  --allow-unauthenticated \
+  --region europe-southwest1 \
+  --entry-point predict_chessboard
+```
+
+##### 🔸 Deploy Stockfish on Cloud Run
+
+From the folder:
+
+```bash
+cd Google-Cloud/stockfish_cloud_run
+```
+
+Deploy with:
+
+```bash
+gcloud run deploy stockfish-service \
+  --source . \
+  --allow-unauthenticated \
+  --region europe-west1
+```
+
+##### 🔸 Web Setup (Firebase Hosting)
+
+You can test the web from the `public/` folder using any static server:
+
+```bash
+cd Google-Cloud/chessboard_web/public
+python3 -m http.server 8000
+# Or open index.html manually in your browser
+```
+
+If you have Firebase CLI configured and wish to deploy:
+
+```bash
+cd Google-Cloud/chessboard_web
+firebase deploy
+```
+
+> ⚠️ Remember to update the endpoints in `script.js` with your actual deployed URLs for:
+>
+> * `predict_chessboard`
+> * `stockfish-service`
+
+---
+
+### 2. Local Software
+
+#### 📁 Project location
+
+The local code is in the `src/` folder and includes:
+
+* `central_module.py`: Handles logic and piece coordination.
+* `motor_control.py`: Translates paths into robot movement commands.
+* `game_state.py`: Board representation and utilities.
+* `robot_server.py`: A simulated Flask server to receive move commands.
+
+#### ✅ Requirements
+
+Since there's no `requirements.txt`, you can install the necessary packages with:
+
+```bash
+pip install flask flask-cors requests serial
+```
+
+If needed, here’s a `requirements.txt` you can create inside `src/`:
+
+```txt
+flask
+flask-cors
+requests
+serial
+```
+
+#### 🚀 Running the robot server
+
+Launch the Flask server to allow robot communication:
+
+```bash
+cd src
+python robot_server.py
+```
+
+This server listens on port `5000` and logs moves received from the web interface.
 
 ---
 ## Electrical Wiring Diagram
