@@ -64,7 +64,9 @@ The following diagram illustrates the complete wiring of the robot's electronic 
 ---
 
 ## Hardware Design
-*Cartesian robot design with labeled axes and component placements.*  
+*Cartesian robot design.*  
+
+![Hardware movement gif](https://github.com/AdriaFerOrtiz/ProyectoMechanicalTurk/blob/main/Schemes-Img/hardware_movment.gif)
 
 ---
 
